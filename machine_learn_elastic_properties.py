@@ -128,7 +128,7 @@ plt.plot()
 # the chemical composition. If we are interested in a more focused task, such
 # as screening the PCD for superhard materials* than we can considered
 # using additional info. Descriptions of the strucutre are a good addition.
-#      *Brgoch group (https://pubs.acs.org/doi/abs/10.1021/jacs.8b02717
+#      *Brgoch group (https://pubs.acs.org/doi/abs/10.1021/jacs.8b02717)
 
 
 # =============================================================================
@@ -142,9 +142,10 @@ plt.plot()
 # different formula, ie. (Ag, Al, ..., O, ..., Zr). Each formula (take alumina)
 # can now be easily encoded.  Al2O3 ==> (0, 2, ..., 3, ..., 0)
 # We can usually do better however. Instead of using just the elements, we can
-# make a feature from a combination of atomic & elemental properties.
+# make a feature from a combination of atomic & elemental properties
+# to make a composition-based feature vector (CBFV).
 
-# I have supplied code (get_features.py) that does this for us automatically. 
+# I have supplied code (composition.py) that does this for us automatically. 
 # If we a pandas.DataFrame with a 'formula' and 'target' column, the function 
 # will return the features for each instance of data (X), the target values (y)
 # and the formula associated with those (formulae).
@@ -195,8 +196,8 @@ normalizer = Normalizer()
 X_train_scaled = scalar.fit_transform(X_train)  # get statistics & transform
 X_test_scaled = scalar.transform(X_test)  # trandform using 'training' stats.
 # Do the normalizing step
-X_train_scaled = normalizer.fit_transform(X_train_scaled)  # normalize each vector
-X_test_scaled = normalizer.transform(X_test_scaled)  # normalize each vector
+X_train_scaled = normalizer.fit_transform(X_train_scaled)  # normalize vectors
+X_test_scaled = normalizer.transform(X_test_scaled)  # normalize vectors
 
 # Algorithms that generally need scaling: Linear, Ridge, & Lasso regressions,
 # Support Vector Machines, Neural Networks, Logistic regression
@@ -281,7 +282,7 @@ utils.plot_act_vs_pred(y_test, y_test_predicted)
 score = r2_score(y_test, y_test_predicted)
 rmse = np.sqrt(mean_squared_error(y_test, y_test_predicted))
 
-print('r2 score: {:0.2f}, rmse: {:0.2f}'.format(score, rmse))
+print('r2 score: {:0.3f}, rmse: {:0.2f}'.format(score, rmse))
 
 
 # =============================================================================
@@ -337,6 +338,10 @@ bulk_modulus_model = MaterialsModel(final_model, scalar, normalizer)
 
 # lets define some formulae we are interested in
 formulae_to_predict = ['NaCl', 'Pu2O4', 'NaNO3']
+formula = 'NaCl'
 
 # use the bulk modulus object to generate predictions for our formulae!
-bulk_modulus_prediction = bulk_modulus_model.predict(formulae_to_predict)
+bulk_modulus_prediction = bulk_modulus_model.predict(formula)
+
+# Email me with additional questions!
+# kaaikauwe@gmail.com
