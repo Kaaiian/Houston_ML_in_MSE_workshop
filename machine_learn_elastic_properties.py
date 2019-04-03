@@ -203,7 +203,7 @@ X_test_scaled = normalizer.transform(X_test_scaled)  # normalize vectors
 # Support Vector Machines, Neural Networks, Logistic regression
 
 # Algorithms that DO NOT need scaling: Decision Tree, Random Forest,
-# Gradient Tree Boosting, etc. (usually decision tree based algorithsm)
+# Gradient Tree Boosting, etc. (usually decision tree based algorithms)
 
 
 # =============================================================================
