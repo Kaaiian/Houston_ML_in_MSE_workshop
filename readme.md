@@ -8,7 +8,7 @@ supplimentary python file (**SPF**), found [here](https://github.com/kaaiian/Hou
 
 This workflow should be sufficient to build simple models to predict materials properties based on the composition. 
 
-If you are completely new to coding, you can follow [this link](https://www.youtube.com/watch?v=5mDYijMfSzs) (a good video I found on youtube) to get a brief walkthrough on how to download python using the anaconda distribution on a windows computer. [This link]() goes through the supplimentary python file (**SPF**) line-by-line and explains in detail how the code is being used and why. 
+If you are completely new to coding, you can follow [this link](https://www.youtube.com/watch?v=5mDYijMfSzs) (a good video I found on youtube) to get a brief walkthrough on how to download python using the anaconda distribution on a windows computer. [This link](https://www.youtube.com/watch?v=WhBg-mC0ChQ&t) goes through the supplimentary python file (**SPF**) line-by-line and explains in detail how the code is being used and why. 
 
 -----
 

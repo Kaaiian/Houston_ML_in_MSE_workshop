@@ -13,6 +13,8 @@ from sklearn.decomposition import PCA
 from sklearn.model_selection import cross_validate, cross_val_score, cross_val_predict, learning_curve, GridSearchCV, KFold
 from sklearn.metrics import confusion_matrix, classification_report, r2_score, mean_squared_error, auc, roc_curve, precision_recall_fscore_support
 
+import composition
+
 class MidpointNormalize(Normalize):
 
     def __init__(self, vmin=None, vmax=None, midpoint=None, clip=False):
@@ -236,3 +238,47 @@ def get_classification_performance_metrics(actual, predicted, probability, plot=
     ppv = tp / (tp + fp)
     npv = tn / (tn + fn)
     return fscore, roc_auc
+
+class MaterialsModel():
+    def __init__(self, trained_model, scalar, normalizer):
+        self.model = trained_model
+        self.scalar = scalar
+        self.normalizer = normalizer
+
+    def predict(self, formula):
+        '''
+        Parameters
+        ----------
+        formula: str or list of strings
+            input chemical formula or list of formulae you want predictions for
+    
+        Return
+        ----------
+        prediction: pd.DataFrame()
+            predicted values generated from the given data
+        '''
+        # Store our formula in a dataframe. Give dummy 'taget value'.
+        # (we will use composition.generate_features() to get the features)
+        if type(formula) is str:
+            df_formula = pd.DataFrame()
+            df_formula['formula'] = [formula]
+            df_formula['target'] = [0]
+        if type(formula) is list:
+            df_formula = pd.DataFrame()
+            df_formula['formula'] = formula
+            df_formula['target'] = np.zeros(len(formula))
+        # here we get the features associated with the formula
+        X, y, formula = composition.generate_features(df_formula)
+        # here we scale the data (acording to the training set statistics)
+        X_scaled = self.scalar.transform(X)
+        X_scaled = self.normalizer.transform(X_scaled)
+        y_predicted = self.model.predict(X_scaled)
+        # save our predictions to a dataframe
+        prediction = pd.DataFrame(formula)
+        prediction['predicted value'] = y_predicted
+        return prediction
+
+
+
+
+
